@@ -1,10 +1,10 @@
-import { HttpClient }             from '@angular/common/http';
-import { Injectable }             from '@angular/core';
-import { File, FileEntry }        from '@ionic-native/file';
-import { Platform }               from 'ionic-angular';
-import { fromEvent }              from 'rxjs/observable/fromEvent';
-import { first }                   from 'rxjs/operators';
-import { ImageLoaderConfig }       from './image-loader-config';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { File, FileEntry } from '@ionic-native/file';
+import { Platform } from '@ionic/angular';
+import { fromEvent } from 'rxjs/observable/fromEvent';
+import { ImageLoaderConfig } from './image-loader-config';
+import { first } from 'rxjs/operators';
 
 interface IndexItem {
   name: string;
@@ -132,7 +132,7 @@ export class ImageLoader {
   }
 
   getFileCacheDirectory() {
-    if (this.config.cacheDirectoryType == 'data') {
+    if (this.config.cacheDirectoryType === 'data') {
       return this.file.dataDirectory;
     }
     return this.file.cacheDirectory;
@@ -163,8 +163,8 @@ export class ImageLoader {
               .then(() => {
                 this.initCache(true);
               }).catch(err => {
-              // Handle error?
-            });
+                // Handle error?
+              });
           } else {
             this.initCache(true);
           }
@@ -333,7 +333,7 @@ export class ImageLoader {
           headers: this.config.httpHeaders
         }).subscribe(
           (data: Blob) => {
-            this.file.writeFile(localDir, fileName, data, {replace: true}).then((file: FileEntry) => {
+            this.file.writeFile(localDir, fileName, data, { replace: true }).then((file: FileEntry) => {
               if (this.isCacheSpaceExceeded) {
                 this.maintainCacheSize();
               }
@@ -356,7 +356,7 @@ export class ImageLoader {
             error(e);
             reject(e);
           });
-        }
+      }
       ).catch((e) => this.throwError(e));
     } else {
       // Prevented same Image from loading at the same time
@@ -366,9 +366,9 @@ export class ImageLoader {
         });
         done();
       },
-      (e) => {
-        error(e);
-      });
+        (e) => {
+          error(e);
+        });
     }
   }
 
@@ -713,6 +713,7 @@ export class ImageLoader {
   private getExtensionFromUrl(url: string): string {
     const urlWitoutParams = url.split(/\#|\?/)[0];
     return (
+      // tslint:disable-next-line:no-bitwise
       urlWitoutParams.substr((~-urlWitoutParams.lastIndexOf('.') >>> 0) + 1) ||
       this.config.fallbackFileNameCachedExtension
     );

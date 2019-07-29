@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
 
-import { ImageLoader }       from '../providers/image-loader';
+import { ImageLoader } from '../providers/image-loader';
 import { ImageLoaderConfig } from '../providers/image-loader-config';
 
 const propMap: any = {
@@ -42,6 +42,7 @@ export class ImgLoaderComponent implements OnInit {
   /**
    * Attributes to pass through to img tag if _useImg == true
    */
+  // tslint:disable-next-line:no-input-rename
   @Input('imgAttributes') imgAttributes: ImageAttribute[] = [];
   /**
    * Enable/Disable caching
@@ -124,11 +125,10 @@ export class ImgLoaderComponent implements OnInit {
   /**
    * The URL of the image to load.
    */
-  @Input()
-  set src(imageUrl: string) {
+  @Input() set src(imageUrl: string) {
     this._src = this.processImageUrl(imageUrl);
     this.updateImage(this._src);
-  };
+  }
 
   ngOnInit(): void {
     if (this.fallbackAsPlaceholder && this.fallbackUrl) {
@@ -227,7 +227,7 @@ export class ImgLoaderComponent implements OnInit {
         `url("${imageUrl || this.fallbackUrl}")`,
       );
     }
-    if(stopLoading) {
+    if (stopLoading) {
       this.load.emit(this);
     }
   }
